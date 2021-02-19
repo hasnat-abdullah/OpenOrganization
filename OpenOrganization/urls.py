@@ -20,12 +20,12 @@ from django.conf import settings
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('api/v1/', include('accounting.urls')),
-    path('api/v1/', include('activity_log.urls')),
-    path('api/v1/', include('donation.urls')),
-    path('api/v1/', include('logs.urls')),
-    path('api/v1/', include('organization_details.urls')),
-    path('api/v1/', include('organization_activity.urls'))
+    path('accounting', include('accounting.urls')),
+    path('activity_log', include('activity_log.urls')),
+    path('donation', include('donation.urls')),
+    path('logs', include('logs.urls')),
+    path('details', include('organization_details.urls')),
+    path('activity', include('organization_activity.urls'))
     ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
 urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
