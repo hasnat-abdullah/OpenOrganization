@@ -18,8 +18,9 @@ class DonorCategory(BaseModel):
 
 
 class Donor(BaseModel):
-    name = models.CharField(max_length=100)
-    phone = models.CharField(max_length=20,null=True,blank=True,unique=True)
+    name = models.CharField(max_length=100, db_index=True)
+    phone = models.CharField(max_length=20,null=True,blank=True,unique=True, db_index=True)
+    email = models.EmailField(max_length=50, blank=True, null=True)
     country = models.ForeignKey(Country, on_delete=models.CASCADE)
     address = models.CharField(max_length=249, null=True, blank=True)
     DonorCategory = models.ForeignKey(DonorCategory, on_delete=models.CASCADE)
@@ -30,7 +31,7 @@ class Donor(BaseModel):
 
 
 class DonationRecord(BaseModel):
-    donor = models.ForeignKey(Donor, on_delete=models.CASCADE)
+    donor = models.ForeignKey(Donor, on_delete=models.CASCADE, db_index=True)
     donated_in_project = models.ForeignKey(Projects, on_delete=models.CASCADE, blank=True, null=True)
     amount = models.PositiveIntegerField(default=0)
     donation_details = models.CharField(max_length=249, blank=True, null=True)

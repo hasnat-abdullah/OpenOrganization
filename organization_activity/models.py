@@ -9,14 +9,14 @@ def project_image_upload_path(instance, filename):
 
 
 class FundType(BaseModel):
-    name = models.CharField(max_length=100)
+    name = models.CharField(max_length=100, db_index=True)
 
     def __str__(self):
         return self.name
 
 
 class Projects(BaseModel):
-    name = models.CharField(max_length=100)
+    name = models.CharField(max_length=100, db_index=True)
     logo = models.ImageField(upload_to='projects/', blank=True, null=True)
     short_description = models.CharField(max_length=249, blank=True, null=True)
     long_description = models.TextField(max_length=10000, blank=True, null=True)
