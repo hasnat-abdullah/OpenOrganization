@@ -5,9 +5,9 @@ from logs.log import *
 
 
 class LogView(View):
-    '''
+    """
     To see desired dates log
-    '''
+    """
 
     def get(self, request, date_n_type):
 

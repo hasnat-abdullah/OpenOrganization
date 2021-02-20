@@ -24,7 +24,7 @@ urlpatterns = [
     path('activity_log/', include('activity_log.urls')),
     path('donation/', include('donation.urls')),
     path('logs/', include('logs.urls')),
-    path('details/', include('organization_details.urls')),
+    path('', include('organization_details.urls')),
     path('activity/', include('organization_activity.urls'))
     ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
