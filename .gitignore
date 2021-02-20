@@ -307,7 +307,6 @@ rebuild.sh
 
 .env.docker
 #nginx/certs/*
-static/
 /log_files
 
 *.http
