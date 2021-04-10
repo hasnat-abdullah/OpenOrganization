@@ -10,6 +10,8 @@ class IndexView(View):
     template_name = "index.html"
 
     def get(self, request):
+        #logger
+        Log.info("Successfully send.",request)
         return render(request, self.template_name)
 
 
