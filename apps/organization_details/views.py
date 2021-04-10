@@ -2,7 +2,7 @@ from django.shortcuts import render
 from django.views import View
 from django.shortcuts import HttpResponse
 from logs.log import *
-from OpenOrganization.settings import STATIC_ROOT
+from django.views.generic import ListView,DetailView
 
 
 class IndexView(View):
@@ -21,3 +21,7 @@ class ContactView(View):
 
     def get(self, request):
         return render(request, self.template_name)
+
+
+def error404(request):
+    return render(request,'404.html', status=404)

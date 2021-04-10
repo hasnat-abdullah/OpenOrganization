@@ -1,5 +1,5 @@
 from django.db import models
-from organization_details.models import BaseModel
+from apps.organization_details.models import BaseModel
 import os
 
 

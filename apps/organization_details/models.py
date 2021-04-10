@@ -23,7 +23,24 @@ class OrganizationDetails(BaseModel):
         return self.name
 
 
+class CoverPhoto(BaseModel):
+    cover_photo = models.ImageField(upload_to='organization/cover/')
+    position = models.SmallIntegerField(null=False, blank=False)
+    h1_text = models.CharField(max_length=250)
+    h2_text = models.CharField(max_length=250)
+    details_text = models.CharField(max_length=250)
+    button_url = models.URLField(blank=True, null=True)
+    is_active = models.BooleanField(default=True)
+
+    def __str__(self):
+        return self.h1_text
+
+
+
 class TransectionAccountsCategory(BaseModel):
+    """
+    bkash, bank, rocket, nagad etc
+    """
     name = models.CharField(max_length=100, db_index=True)
 
     def __str__(self):

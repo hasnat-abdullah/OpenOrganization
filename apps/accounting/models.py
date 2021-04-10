@@ -1,11 +1,12 @@
 from django.db import models
-from organization_details.models import BaseModel, TransectionAccounts
-from organization_activity.models import Projects, FundType
-from donation.models import DonationRecord
+from apps.organization_details.models import BaseModel, TransectionAccounts
+from apps.organization_activity.models import Projects, FundType
+from apps.donation.models import FundType
 
 
 class CashBalance(BaseModel):
-    project = models.OneToOneField(Projects, on_delete=models.CASCADE)
+    project = models.ForeignKey(Projects, on_delete=models.CASCADE)
+    fund_type = models.ForeignKey(FundType, on_delete=models.CASCADE)
     balance = models.IntegerField(default=0)
 
     def __str__(self):
