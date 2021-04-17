@@ -1,0 +1,65 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block seo_description %}{% endblock %}
+{% block seo_keyword %}{% endblock %}
+{% block title %}Index Page{% endblock %}
+{% block stylesheet %} {% endblock %}
+{% block body %}
+
+<!--SUBPAGE HEAD-->
+
+<div class="subpage-head has-margin-bottom">
+  <div class="container">
+    <h3>Event Calendar</h3>
+    <p class="lead">Event calendar integrated with Google Calendar</p>
+  </div>
+</div>
+
+<!-- // END SUBPAGE HEAD --> 
+
+<!-- EVENT CALENDAR -->
+<div class="container has-margin-bottom">
+  <div class="row">
+    <div class="col-sm-12 has-margin-xs-bottom">
+      <div id="loading" class="text-center">loading...</div>
+      <!--EVENT CALENDAR WILL LOAD HERE DYNAMICALLY-->
+      <div class="event-cal-wrap" id="event-calendar"> </div>
+    </div>
+  </div>
+</div>
+<!--// END EVENT CALENDAR --> 
+
+{% endblock %}
+{% block script %}
+
+<script src="js/moment.min.js"></script> 
+<script src="js/fullcalendar.js"></script> 
+<script src="js/gcal.js"></script>
+
+
+<!--============== EVENT CALENDAR =================--> 
+
+<script type='text/javascript'>
+
+$(document).ready(function() {
+    $('#event-calendar').fullCalendar({
+        googleCalendarApiKey: 'AIzaSyCJ5AqFvTnQ5kUZvYgTMAMjXW5dfpV4qew',
+        events: {
+            googleCalendarId: '6au3emlgjfair5hjhiegs48tcg@group.calendar.google.com'
+        },
+		eventClick: function(event) {
+				// opens events in a popup window
+				window.open(event.url, 'gcalevent', 'width=700,height=600');
+				return false;
+			},
+			
+		loading: function(bool) {
+				$('#loading').toggle(bool);
+		}
+    });
+});
+
+</script>
+
+
+{% endblock %}
