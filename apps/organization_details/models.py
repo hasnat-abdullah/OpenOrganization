@@ -47,7 +47,6 @@ class TransectionAccountsCategory(BaseModel):
         return self.name
 
 
-
 class TransectionAccounts(BaseModel):
     bank_name = models.CharField(max_length=60, blank=True, null=True, db_index=True)
     branch_name = models.CharField(max_length=60, blank=True, null=True)
@@ -63,3 +62,12 @@ class TransectionAccounts(BaseModel):
     def __str__(self):
         return f"{self.category}- {self.account_number}"
 
+
+class Contact(BaseModel):
+    name = models.CharField(max_length=50,blank=False)
+    email = models.EmailField(blank=False)
+    phn = models.CharField(blank=True,null=True, max_length=20, default=None)
+    message = models.TextField(max_length=250)
+
+    def __str__(self):
+        return self.name
