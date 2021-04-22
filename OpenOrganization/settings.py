@@ -179,3 +179,12 @@ MESSAGE_TAGS = {
     messages.ERROR: 'alert alert-danger',
     messages.DEBUG: 'alert alert-info',
 }
+
+
+# ----- Email config -----
+EMAIL_BACKEND = env("EMAIL_BACKEND")
+EMAIL_HOST = env("EMAIL_HOST")
+EMAIL_USE_TLS = env("EMAIL_USE_TLS")
+EMAIL_PORT = env("EMAIL_PORT")
+EMAIL_HOST_USER = env("EMAIL_HOST_USER") #sender's email-id
+EMAIL_HOST_PASSWORD = env("EMAIL_HOST_PASSWORD") #password associated with above email-id

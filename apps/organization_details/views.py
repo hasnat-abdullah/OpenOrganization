@@ -6,6 +6,7 @@ from django.views.generic import ListView, DetailView, CreateView
 from .models import *
 from .forms import ContactForm
 from django.contrib import messages
+from utils.email_services import EMAIL
 
 
 class IndexView(View):
@@ -29,7 +30,7 @@ class IndexView(View):
 
 
 class ContactView(View):
-    """To see desired dates log"""
+    """contact form"""
     template_name = "contact.html"
 
     def get(self, request):
@@ -39,11 +40,20 @@ class ContactView(View):
         form = ContactForm(request.POST)
         if form.is_valid():
             instance = form.save()
+
+            email_service = EMAIL()
+            email_service.send_email_service(
+                name=form.cleaned_data['name'] ,
+                phn=form.cleaned_data['phn'] ,
+                subject="Contact from Muslim Aid",
+                message=form.cleaned_data['message'],
+                recipient_list=[form.cleaned_data['email']]
+            )
+
             messages.add_message(request, messages.SUCCESS, "Your message sent successfully.")
-            return render(request, "contact.html")
         else:
             messages.add_message(request, messages.ERROR, "Couldn't send message. Check all the field carefully.")
-            return render(request, "contact.html")
+        return render(request, self.template_name)
 
 
     # def error404(request):
