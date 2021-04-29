@@ -11,39 +11,24 @@
 <div id="myCarousel" class="carousel slide" data-ride="carousel"> 
   <!-- Indicators -->
   <ol class="carousel-indicators">
-    <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
-    <li data-target="#myCarousel" data-slide-to="1"></li>
-    <li data-target="#myCarousel" data-slide-to="2"></li>
+      {% for c in cover %}
+    <li data-target="#myCarousel" data-slide-to="{{forloop.counter0}}" class="{% if forloop.first %}active{% endif %}"></li>
+      {% endfor %}
   </ol>
   <div class="carousel-inner">
-    <div class="item slide-one active">
-      <div class="container">
-        <div class="carousel-caption">
-          <h3>EXPERIENCE GOD'S</h3>
-          <h1>UNCEASING PROVISION</h1>
-          
-          <p><a class="btn btn-giant btn-primary" href="charity-donation.html" role="button">JOIN US &rarr;</a></p>
-        </div>
-      </div>
-    </div>
-    <div class="item slide-two">
-      <div class="container">
-        <div class="carousel-caption">
-          <h2>Waves of Grace</h2>
-          <p class="lead">Receive the unceasing wave after wave, after wave, after wave of Grace God has for you.</p>
-          <p><a class="btn btn-lg btn-primary" href="ministry.html" role="button">Learn more &rarr;</a></p>
-        </div>
-      </div>
-    </div>
-    <div class="item slide-three">
-      <div class="container">
-        <div class="carousel-caption">
-          <h2>Grace and Truth</h2>
-          <p class="lead">For God did not send his Son into the world to condemn the world, but to save the world through him. <em>John 3:17</em></p>
-          <p><a class="btn btn-lg btn-primary" href="image-gallery.html" role="button">Browse gallery &rarr;</a></p>
-        </div>
-      </div>
-    </div>
+      {% for c in cover %}
+          <div class="item slide-one {% if forloop.first %}active{% endif %}">
+              <div class="container">
+                  <div class="carousel-caption">
+                      {% if c.h2_text %}<h2>{{ c.h2_text}}</h2>{% endif %}
+                      {% if c.h1_text %}<h1>{{ c.h1_text}}</h1>{% endif %}
+                      {% if c.details_text %}<p class="lead"> {{ c.details_text }}</p>{% endif %}
+                      {% if c.button_text %}<p><a class="btn btn-giant btn-primary" href="{{ c.button_url }}"
+                                                  role="button">{{ c.button_text }}</a></p>{% endif %}
+                  </div>
+              </div>
+          </div>
+      {% endfor %}
   </div>
   <a class="left carousel-control" href="#myCarousel" role="button" data-slide="prev"><span class="glyphicon glyphicon-chevron-left"></span></a> <a class="right carousel-control" href="#myCarousel" role="button" data-slide="next"><span class="glyphicon glyphicon-chevron-right"></span></a> </div>
 <!-- // Banner Slider --> 
@@ -242,37 +227,28 @@
     <h4> OUR GALLERY </h4>
   </div>
   <div class="img-gallery row">
-    <div class="col-sm-4 col-md-3"> <a class="fancybox" href="{% static 'images/gallery/img_gallery_1.jpg' %}" data-fancybox-group="gallery" title="church image gallery"> <img src="{% static 'images/gallery/thumb/gallery_thumb_1.jpg' %}" class="img-responsive" width="270" height="270" alt="church image gallery"> </a> </div>
-    <div class="col-sm-4 col-md-3"> <a class="fancybox" href="{% static 'images/gallery/img_gallery_2.jpg' %}" data-fancybox-group="gallery" title="church image gallery"> <img src="{% static 'images/gallery/thumb/gallery_thumb_2.jpg' %}" class="img-responsive" width="270" height="270" alt="church image gallery"> </a> </div>
-    <div class="col-sm-4 col-md-3"> <a class="fancybox" href="{% static 'images/gallery/img_gallery_3.jpg' %}" data-fancybox-group="gallery" title="church image gallery"> <img src="{% static 'images/gallery/thumb/gallery_thumb_3.jpg' %}" class="img-responsive" width="270" height="270" alt="church image gallery"> </a> </div>
-    <div class="col-sm-4 col-md-3"> <a class="fancybox" href="{% static 'images/gallery/img_gallery_4.jpg' %}" data-fancybox-group="gallery" title="church image gallery"> <img src="{% static 'images/gallery/thumb/gallery_thumb_4.jpg' %}" class="img-responsive" width="270" height="270" alt="church image gallery"> </a> </div>
-    <div class="col-sm-4 col-md-3"> <a class="fancybox" href="{% static 'images/gallery/img_gallery_5.jpg' %}" data-fancybox-group="gallery" title="church image gallery"> <img src="{% static 'images/gallery/thumb/gallery_thumb_5.jpg' %}" class="img-responsive" width="270" height="270" alt="church image gallery"> </a> </div>
-    <div class="col-sm-4 col-md-3"> <a class="fancybox" href="{% static 'images/gallery/img_gallery_6.jpg' %}" data-fancybox-group="gallery" title="church image gallery"> <img src="{% static 'images/gallery/thumb/gallery_thumb_6.jpg' %}" class="img-responsive" width="270" height="270" alt="church image gallery"> </a> </div>
-    <div class="col-sm-4 col-md-3"> <a class="fancybox" href="{% static 'images/gallery/img_gallery_7.jpg' %}" data-fancybox-group="gallery" title="church image gallery"> <img src="{% static 'images/gallery/thumb/gallery_thumb_7.jpg' %}" class="img-responsive" width="270" height="270" alt="church image gallery"> </a> </div>
-    <div class="col-sm-4 col-md-3"> <a class="fancybox" href="{% static 'images/gallery/img_gallery_8.jpg' %}" data-fancybox-group="gallery" title="church image gallery"> <img src="{% static 'images/gallery/thumb/gallery_thumb_8.jpg' %}" class="img-responsive" width="270" height="270" alt="church image gallery"> </a> </div>
+    {% for g in gallery %}
+    <div class="col-sm-4 col-md-3"> <a class="fancybox" href="{{ g.image.url }}" data-fancybox-group="gallery" title="{{ g.short_description}}"> <img src="{{ g.image.url }}" class="img-responsive" width="270" height="270" alt="{{ g.short_description}}"> </a> </div>
+    {% endfor %}
   </div>
 </div>
 <!--// END OUR GALLERY --> 
 
-<!-- BIBLE QUOTES -->
+<!-- QUOTES -->
 <div class="highlight-bg has-margin-bottom">
   <div class="container event-list">
     <div class="section-title">
-      <h4> BIBLE VERSES </h4>
+      <h4> QUOTE </h4>
     </div>
     <div class="row">
       <div class="col-md-12">
         <div class="owl-carousel2">
-          <div class="item">
-            <blockquote class="blockquote-centered"> For God so loved the world that he gave his one and only begotten Son, that who ever believes in him shall not perish but have eternal life. <small>John 3:16 (KJV)</small> </blockquote>
-          </div>
-          <div class="item">
-            <blockquote class="blockquote-centered"> For if, by the trespass of the one man, death reigned through that one man, how much more will those who receive God's abundant provision of grace!
- <small>Romans 5:17 (NIV)</small> </blockquote>
-          </div>
-          <div class="item">
-            <blockquote class="blockquote-centered">For God did not send his Son into the world to condemn the world, but to save the world through him. <small>John 3:17</small> </blockquote>
-          </div>
+            {% for q in quote %}
+                <div class="item">
+                    <blockquote class="blockquote-centered">{{ q.quote_details }} <small>{{ q.reference }}</small>
+                    </blockquote>
+                </div>
+            {% endfor %}
         </div>
       </div>
     </div>

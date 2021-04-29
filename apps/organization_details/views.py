@@ -4,6 +4,7 @@ from django.shortcuts import HttpResponse
 from logs.log import *
 from django.views.generic import ListView, DetailView, CreateView
 from .models import *
+from apps.organization_activity.models import ProjectsGallary
 from .forms import ContactForm
 from django.contrib import messages
 from utils.email_services import EMAIL
@@ -16,11 +17,15 @@ class IndexView(View):
     def get(self, request):
         # Cover photo
         cover = CoverPhoto.objects.filter(is_active=True).order_by('position')
-
-        #
+        # Quote
+        quote = Quote.objects.filter(will_show_in_homepage=True).order_by('position')
+        # Gallery image
+        gallery = ProjectsGallary.objects.filter(is_active=True)[:8]
 
         data = {
             "cover": cover,
+            "quote":quote,
+            "gallery": gallery
 
         }
 

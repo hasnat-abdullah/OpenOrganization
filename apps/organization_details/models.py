@@ -26,14 +26,12 @@ class OrganizationDetails(BaseModel):
 class CoverPhoto(BaseModel):
     cover_photo = models.ImageField(upload_to='organization/cover/')
     position = models.SmallIntegerField(null=False, blank=False)
-    h1_text = models.CharField(max_length=250)
-    h2_text = models.CharField(max_length=250)
-    details_text = models.CharField(max_length=250)
+    h1_text = models.CharField(max_length=250, null=True, blank=True)
+    h2_text = models.CharField(max_length=250, null=True, blank=True)
+    details_text = models.CharField(max_length=250, null=True, blank=True)
+    button_text = models.CharField(max_length=100, null=True, blank=True)
     button_url = models.URLField(blank=True, null=True)
     is_active = models.BooleanField(default=True)
-
-    def __str__(self):
-        return self.h1_text
 
 
 
@@ -71,3 +69,21 @@ class Contact(BaseModel):
 
     def __str__(self):
         return self.name
+
+
+class Quote(BaseModel):
+    quote_details = models.TextField(max_length=1000)
+    reference = models.CharField(max_length=200)
+    position = models.PositiveSmallIntegerField(default=0)
+    will_show_in_homepage = models.BooleanField(default=True)
+
+    def __str__(self):
+        return self.quote_details
+
+
+class Subscribers(BaseModel):
+    email = models.EmailField(max_length=249)
+    is_active = models.BooleanField(default=True)
+
+    def __str__(self):
+        return self.email
