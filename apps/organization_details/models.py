@@ -34,7 +34,6 @@ class CoverPhoto(BaseModel):
     is_active = models.BooleanField(default=True)
 
 
-
 class TransectionAccountsCategory(BaseModel):
     """
     bkash, bank, rocket, nagad etc
