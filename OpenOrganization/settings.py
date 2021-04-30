@@ -46,9 +46,10 @@ DEFAULT_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django.contrib.humanize'
 ]
 
-THIRD_PARTY_APPS = []
+THIRD_PARTY_APPS = ['crispy_forms',]
 
 LOCAL_APPS = [
     'apps.accounting',
@@ -56,7 +57,8 @@ LOCAL_APPS = [
     'apps.donation',
     'logs',
     'apps.organization_activity',
-    'apps.organization_details'
+    'apps.organization_details',
+    'apps.blog'
 ]
 
 INSTALLED_APPS = DEFAULT_APPS + THIRD_PARTY_APPS + LOCAL_APPS
@@ -165,6 +167,9 @@ STATICFILES_DIRS = [
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media/')
 
+
+# ----- Crispy Form -----
+CRISPY_TEMPLATE_PACK = 'bootstrap4'
 
 # ----- LOGIN -----
 LOGIN_URL = 'login'
