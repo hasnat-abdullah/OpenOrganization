@@ -1,7 +1,7 @@
 <div class="text-center center-block">
     <ul class="pagination">
         {% if page_obj.has_previous %}
-            <li class="active"><a href="?page={{ page_obj.previous_page_number }}">«</a></li>
+            <li><a href="?page={{ page_obj.previous_page_number }}">«</a></li>
         {% else %}
             <li class="disabled"><a href="#">«</a></li>
         {% endif %}

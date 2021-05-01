@@ -5,9 +5,13 @@ from logs.log import *
 from django.views.generic import ListView, DetailView, CreateView
 from .models import *
 from apps.organization_activity.models import ProjectsGallary, Projects
+from apps.accounting.models import DebitRecord
+from apps.donation.models import DonationRecord
 from .forms import ContactForm
 from django.contrib import messages
 from utils.email_services import EMAIL
+import json
+from django.views.decorators.csrf import csrf_exempt
 
 
 class IndexView(View):
@@ -23,12 +27,18 @@ class IndexView(View):
         gallery = ProjectsGallary.objects.filter(is_active=True).only('image','short_description')[:8]
         # Projects
         projects = Projects.objects.filter(is_active=True, still_raising_fund=True).order_by("created_at")[:3]
+        # Expense
+        expenses = DebitRecord.objects.all().order_by('-id').only('title','amount','created_at')[:5]
+        # Donation
+        donations = DonationRecord.objects.select_related('donor').all().order_by('-id').only('donor','amount','created_at')[:5]
 
         data = {
             "cover": cover,
             "quote":quote,
             "gallery": gallery,
-            "projects":projects
+            "projects":projects,
+            "expenses":expenses,
+            "donations":donations
 
         }
 
@@ -66,3 +76,18 @@ class ContactView(View):
 
     # def error404(request):
     #     return render(request, '404.html', status=404)
+
+
+class SubscriptionView(View):
+
+    def post(self, request):
+        email = request.POST.get('email', None)
+        if Subscribers.objects.filter(email=email).exists():
+            return HttpResponse("This email already listed.")
+
+        inputToSave = Subscribers.objects.create(
+            email=email,
+            is_active=True
+        )
+        inputToSave.save()
+        return HttpResponse("Successfully added to our list.")

@@ -22,6 +22,7 @@ class DebitCategory(BaseModel):
 
 class DebitRecord(BaseModel):
     project = models.ForeignKey(Projects, on_delete=models.CASCADE)
+    title = models.CharField(max_length=150)
     amount = models.PositiveIntegerField(default=0)
     debited_by = models.CharField(max_length=50, default="Admin")
     debited_to = models.CharField(max_length=100, default="Admin")

@@ -18,7 +18,7 @@ class ArticlesListView(ListView):
     def get_queryset(self):
         query_param = self.request.GET.get("q", None) # get country search query
         if query_param is not None:
-            return Articles.objects.filter(Q(title__icontains=query_param)).order_by('-id')
+            return Articles.objects.filter(Q(title__icontains=query_param)|Q(author__name__icontains=query_param)).order_by('-id')
         return Articles.objects.all().order_by('-id')
 
     def get_context_data(self, **kwargs):
@@ -58,7 +58,8 @@ class CategoryArticlesListView(ListView):
     def get_queryset(self):
         query_param = self.request.GET.get("q", None) # get country search query
         if query_param is not None:
-            return Articles.objects.filter(Q(title__icontains=query_param, category_id=self.kwargs['pk'])).order_by('-id')
+            return Articles.objects.filter(Q(title__icontains=query_param) | Q(author__name__icontains=query_param),
+                                           category_id=self.kwargs['pk']).order_by('-id')
         return Articles.objects.filter(category_id=self.kwargs['pk']).order_by('-id')
 
     def get_context_data(self, **kwargs):
@@ -91,7 +92,8 @@ class AuthorArticlesListView(ListView):
     def get_queryset(self):
         query_param = self.request.GET.get("q", None) # get country search query
         if query_param is not None:
-            return Articles.objects.filter(Q(title__icontains=query_param, author__id=self.kwargs['pk'])).order_by('-id')
+            return Articles.objects.filter(Q(title__icontains=query_param) | Q(author__name__icontains=query_param),
+                                           author__id=self.kwargs['pk']).order_by('-id')
         return Articles.objects.filter(author__id=self.kwargs['pk']).order_by('-id')
 
     def get_context_data(self, **kwargs):

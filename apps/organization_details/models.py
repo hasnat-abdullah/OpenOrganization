@@ -81,7 +81,7 @@ class Quote(BaseModel):
 
 
 class Subscribers(BaseModel):
-    email = models.EmailField(max_length=249)
+    email = models.EmailField(max_length=249, unique=True)
     is_active = models.BooleanField(default=True)
 
     def __str__(self):
