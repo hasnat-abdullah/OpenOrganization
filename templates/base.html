@@ -55,10 +55,13 @@
                         </ul>
                     </li>
 
-                    <li class="{% if url_name == 'article_list' %}active{% endif %}"><a href="{% url 'article_list' %}">BLOG</a>
+                    <li class="{% if url_name == 'article_list' %}active{% endif %}">
+                        <a href="{% url 'article_list' %}">BLOG</a>
                     </li>
-                    <li class="{% if url_name == 'contact' %}active{% endif %}"><a
-                            href="{% url 'contact' %}">CONTACT</a></li>
+                    <li class="{% if url_name == 'contact' %}active{% endif %}">
+                        <a href="{% url 'contact' %}">CONTACT</a>
+                    </li>
+                    <li><a class="btn btn-primary " href="{% url 'donate' %}">DONATE</a></li>
                 </ul>
             {% endwith %}
         </div>

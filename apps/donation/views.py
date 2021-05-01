@@ -3,6 +3,7 @@ from django.views.generic import ListView,DetailView
 from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
 from django.db.models.query_utils import Q
 from .models import DonationRecord
+from django.views import View
 from logs.log import *
 
 
@@ -38,3 +39,13 @@ class DonationDetailView(DetailView):
     model = DonationRecord
     template_name = 'donation-record-single.html'
     context_object_name = 'donation'
+
+
+class DonateView(View):
+    template_name = 'charity-donation.html'
+
+    def get(self, request):
+        return render(request, self.template_name, context=None)
+
+    def post(self, request):
+        return render(request, self.template_name, context=None)
