@@ -1,0 +1,71 @@
+{% extends 'base.html' %}
+{% load humanize %}
+{% load static %}
+{% block seo_description %}{% endblock %}
+{% block seo_keyword %}{% endblock %}
+{% block title %}Expenses{% endblock %}
+{% block stylesheet %} {% endblock %}
+{% block body %}
+
+    <!--SUBPAGE HEAD-->
+
+    <div class="subpage-head has-margin-bottom">
+        <div class="container">
+            <h3>Our Expenses</h3>
+            <p class="lead">All expenses by our organization.</p>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="panel panel-danger">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">Latest Expenses</h3>
+                    </div>
+                    <div class="panel-body">
+                        <table class="table table-striped">
+                            <thead>
+                            <tr>
+                                <th>#</th>
+                                <th>Category</th>
+                                <th>Title</th>
+                                <th>Amount</th>
+                                <th>Debited to</th>
+                                <th>Justification</th>
+                                <th>Date</th>
+                                <th></th>
+
+                            </tr>
+                            </thead>
+                            <tbody>
+                            {% for expense in expenses %}
+                                <tr>
+                                    <td>{{ forloop.counter }}</td>
+                                    <td>{{ expense.category.name }}</td>
+                                    <td>{{ expense.title }}</td>
+                                    <td>{{ expense.amount }}</td>
+                                    <td>{{ expense.debited_to }}</td>
+                                    <td>{{ expense.justification }}</td>
+                                    <td>{{ expense.created_at }}</td>
+                                    <td>
+                                        <a href="{% url 'expense_details' pk=expense.id %}"
+                                           class="btn btn-xs btn-info" role="button">Details</a>
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                            </tbody>
+                        </table>
+                    {% if is_paginated %}
+                    {% include "_pagination_long.html" %}
+                {% endif %}
+
+                    </div>
+                </div>
+            </div>
+            <!-- /.col-sm-6 -->
+        </div>
+    </div>
+
+{% endblock %}
+{% block script %} {% endblock %}

@@ -1,0 +1,90 @@
+{% extends 'base.html' %}
+{% load humanize %}
+{% load static %}
+{% block seo_description %}{% endblock %}
+{% block seo_keyword %}{% endblock %}
+{% block title %}Expense Details{% endblock %}
+{% block stylesheet %} {% endblock %}
+{% block body %}
+
+    <!--SUBPAGE HEAD-->
+
+    <div class="subpage-head has-margin-bottom">
+        <div class="container">
+            <h3>Expense Details #{{ expense.id }}</h3>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="panel panel-info">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">Expense #{{ expense.id }}</h3>
+                    </div>
+                    <div class="panel-body">
+                        <table class="table table-striped">
+                            <thead>
+                            <tr>
+                                <th>Name</th>
+                                <th>Details</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr>
+                                <td><b>Project</b></td>
+                                <td>{{ expense.project.name }}</td>
+                            </tr>
+                            <tr>
+                                <td><b>Category</b></td>
+                                <td>{{ expense.category.name }}</td>
+                            </tr>
+                            <tr>
+                                <td><b>Title</b></td>
+                                <td>{{ expense.title }}</td>
+                            </tr>
+                            <tr>
+                                <td><b>Amount</b></td>
+                                <td>{{ expense.amount }}</td>
+                            </tr>
+                            <tr>
+                                <td><b>Debited by</b></td>
+                                <td>{{ expense.debited_by }}</td>
+                            </tr>
+                            <tr>
+                                <td><b>Debited to</b></td>
+                                <td>{{ expense.debited_to }}</td>
+                            </tr>
+                            <tr>
+                                <td><b>Justification</b></td>
+                                <td>{{ expense.justification }}</td>
+                            </tr>
+                            <tr>
+                                <td><b>Comment</b></td>
+                                <td>{{ expense.comment }}</td>
+                            </tr>
+                            <tr>
+                                <td><b>Created at</b></td>
+                                <td>{{ expense.created_at }}</td>
+                            </tr>
+                            <tr>
+                                <td><b>Updated at</b></td>
+                                <td>{{ expense.updated_at }}</td>
+                            </tr>
+
+                            </tbody>
+                        </table>
+
+                    </div>
+                </div>
+                <div class="text-center">
+                                <input type=button value="< Back" class="m-lg-1  btn btn-success" onClick="javascript:history.go(-1);">
+                            </div>
+                <br>
+            </div>
+            <!-- /.col-sm-6 -->
+        </div>
+    </div>
+
+{% endblock %}
+{% block script %} {% endblock %}

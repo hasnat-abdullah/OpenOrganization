@@ -42,11 +42,21 @@
             <a class="navbar-brand" href="{% url 'index' %}"> <img src="{% static 'images/logo.png' %}" alt="logo"
                                                                    class="img-responsive"></a>
         </div>
+
         <div class="navbar-collapse collapse">
             {% with request.resolver_match.url_name as url_name %}
                 <ul class="nav navbar-nav navbar-right">
                     <li class="{% if url_name == 'index' %}active{% endif %}"><a href="{% url 'index' %}">HOME</a></li>
-                    <li class="{% if url_name == 'article_list' %}active{% endif %}"><a href="{% url 'article_list' %}">BLOG</a></li>
+                    <li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown">Account<span
+                            class="caret"></span></a>
+                        <ul class="dropdown-menu dropdown-menu-left" role="menu">
+                            <li><a href="{% url 'expense_list' %}">Expenses</a></li>
+                            <li><a href="{% url 'index' %}">Donations</a></li>
+                        </ul>
+                    </li>
+
+                    <li class="{% if url_name == 'article_list' %}active{% endif %}"><a href="{% url 'article_list' %}">BLOG</a>
+                    </li>
                     <li class="{% if url_name == 'contact' %}active{% endif %}"><a
                             href="{% url 'contact' %}">CONTACT</a></li>
                 </ul>

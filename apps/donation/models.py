@@ -52,7 +52,7 @@ class RepeatedDonation(BaseModel):
     )
     donor = models.ForeignKey(Donor, on_delete=models.CASCADE, db_index=True)
     donated_in_project = models.ForeignKey(Projects, on_delete=models.CASCADE, blank=True, null=True)
-    amount = models.PositiveIntegerField(default=0)
+    amount = models.DecimalField(default=0, decimal_places=2, max_digits=15)
     fund_type = models.ForeignKey(FundType, on_delete=models.CASCADE)
     donation_details = models.CharField(max_length=249, blank=True, null=True)
     donated_to = models.ForeignKey(TransectionAccounts, on_delete=models.CASCADE)
@@ -66,7 +66,7 @@ class RepeatedDonation(BaseModel):
 class DonationRecord(BaseModel):
     donor = models.ForeignKey(Donor, on_delete=models.CASCADE, db_index=True)
     donated_in_project = models.ForeignKey(Projects, on_delete=models.CASCADE, blank=True, null=True)
-    amount = models.PositiveIntegerField(default=0)
+    amount = models.DecimalField(default=0, decimal_places=2, max_digits=15)
     fund_type = models.ForeignKey(FundType, on_delete=models.CASCADE)
     donation_details = models.CharField(max_length=249, blank=True, null=True)
     donated_to = models.ForeignKey(TransectionAccounts, on_delete=models.CASCADE)
