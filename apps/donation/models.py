@@ -23,7 +23,7 @@ class DonorCategory(BaseModel):
 class Donor(BaseModel):
     name = models.CharField(max_length=100, db_index=True)
     image = models.ImageField(upload_to='donor_pic/', null=True, blank=True)
-    phone = models.CharField(max_length=20,null=True,blank=True,unique=True, db_index=True)
+    phone = models.CharField(max_length=20,unique=True, db_index=True)
     email = models.EmailField(max_length=50, blank=True, null=True)
     country = models.ForeignKey(Country, on_delete=models.CASCADE)
     address = models.CharField(max_length=249, null=True, blank=True)
