@@ -21,16 +21,16 @@ class DonationRecordListView(ListView):
 
     def get_context_data(self, **kwargs):
         context = super(DonationRecordListView, self).get_context_data(**kwargs)
-        debit_records = self.get_queryset()
+        donation_records = self.get_queryset()
         page = self.request.GET.get('page')
-        paginator = Paginator(debit_records, self.paginate_by)
+        paginator = Paginator(donation_records, self.paginate_by)
         try:
-            debit_records = paginator.page(page)
+            donation_records = paginator.page(page)
         except PageNotAnInteger:
-            debit_records = paginator.page(1)
+            donation_records = paginator.page(1)
         except EmptyPage:
-            debit_records = paginator.page(paginator.num_pages)
-        context['expenses'] = debit_records
+            donation_records = paginator.page(paginator.num_pages)
+        context['donations'] = donation_records
         return context
 
 

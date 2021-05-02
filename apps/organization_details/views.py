@@ -3,10 +3,12 @@ from django.views import View
 from django.shortcuts import HttpResponse
 from logs.log import *
 from django.views.generic import ListView, DetailView, CreateView
+from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
 from .models import *
 from apps.organization_activity.models import ProjectsGallary, Projects
 from apps.accounting.models import DebitRecord
 from apps.donation.models import DonationRecord
+from apps.blog.models import Articles
 from .forms import ContactForm
 from django.contrib import messages
 from utils.email_services import EMAIL
@@ -31,6 +33,10 @@ class IndexView(View):
         expenses = DebitRecord.objects.all().order_by('-id').only('title','amount','created_at')[:5]
         # Donation
         donations = DonationRecord.objects.select_related('donor').all().order_by('-id').only('donor','amount','created_at')[:5]
+        # Blog
+        articles = Articles.objects.all().order_by('-id').only('title', 'category','author','thumbnail','created_at')[:2]
+        # Notice
+        notices = Notices.objects.filter(published_date__lte=timezone.now()).order_by('-id').only('title','published_date')[:5]
 
         data = {
             "cover": cover,
@@ -38,7 +44,9 @@ class IndexView(View):
             "gallery": gallery,
             "projects":projects,
             "expenses":expenses,
-            "donations":donations
+            "donations":donations,
+            "articles":articles,
+            "notices":notices
 
         }
 
@@ -91,3 +99,37 @@ class SubscriptionView(View):
         )
         inputToSave.save()
         return HttpResponse("Successfully added to our list.")
+
+
+class NoticeListView(ListView):
+    """List view with notice & pagination"""
+    model = Notices
+    template_name = 'notices.html'
+    context_object_name = 'notices'
+    fields = ('title','details','published_date',)
+    ordering = '-id'
+    paginate_by = 20
+
+    def get_queryset(self):
+        return Notices.objects.all().order_by('-id')
+
+    def get_context_data(self, **kwargs):
+        context = super(NoticeListView, self).get_context_data(**kwargs)
+        notices = self.get_queryset()
+        page = self.request.GET.get('page')
+        paginator = Paginator(notices, self.paginate_by)
+        try:
+            notices = paginator.page(page)
+        except PageNotAnInteger:
+            notices = paginator.page(1)
+        except EmptyPage:
+            notices = paginator.page(paginator.num_pages)
+        context['notices'] = notices
+        return context
+
+
+class NoticeDetailView(DetailView):
+    """Notice details page view"""
+    model = Notices
+    template_name = 'notice-single.html'
+    context_object_name = 'notice'

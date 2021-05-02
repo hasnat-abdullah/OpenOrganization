@@ -1,0 +1,63 @@
+{% extends 'base.html' %}
+{% load humanize %}
+{% load static %}
+{% block seo_description %}{% endblock %}
+{% block seo_keyword %}{% endblock %}
+{% block title %}Expenses{% endblock %}
+{% block stylesheet %} {% endblock %}
+{% block body %}
+
+    <!--SUBPAGE HEAD-->
+
+    <div class="subpage-head has-margin-bottom">
+        <div class="container">
+            <h3>Notices</h3>
+            <p class="lead">All important notice are enlisted here.</p>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="panel panel-warning">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">Latest Notices</h3>
+                    </div>
+                    <div class="panel-body">
+                        <table class="table table-striped">
+                            <thead>
+                            <tr>
+                                <th>#</th>
+                                <th>Title</th>
+                                <th>Published on</th>
+                                <th></th>
+
+                            </tr>
+                            </thead>
+                            <tbody>
+                            {% for notice in notices %}
+                                <tr>
+                                    <td>{{ forloop.counter }}</td>
+                                    <td>{{ notice.title }}</td>
+                                    <td>{{ notice.published_date }}</td>
+                                    <td>
+                                        <a href="{% url 'notice_details' pk=notice.id %}"
+                                           class="btn btn-xs btn-info" role="button">Details</a>
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                            </tbody>
+                        </table>
+                        {% if is_paginated %}
+                            {% include "_pagination_long.html" %}
+                        {% endif %}
+
+                    </div>
+                </div>
+            </div>
+            <!-- /.col-sm-6 -->
+        </div>
+    </div>
+
+{% endblock %}
+{% block script %} {% endblock %}
