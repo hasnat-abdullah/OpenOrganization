@@ -22,15 +22,24 @@ class Projects(BaseModel):
     long_description = models.TextField(max_length=10000, blank=True, null=True)
     start_date = models.DateField(blank=True, null=True)
     end_date = models.DateField(blank=True, null=True)
-    duration = models.CharField(max_length=249,blank=True, null=True)
-    allowed_fund_category = models.ManyToManyField(FundType,blank=True)
-    expected_budget = models.PositiveIntegerField(null=True,blank=True, default=0)
-    collected_money = models.PositiveIntegerField(null=True,blank=True, default=0)
+    duration = models.CharField(max_length=249, blank=True, null=True)
+    allowed_fund_category = models.ManyToManyField(FundType, blank=True)
+    expected_budget = models.PositiveIntegerField(null=True, blank=True, default=0)
+    collected_money = models.PositiveIntegerField(null=True, blank=True, default=0)
     is_active = models.BooleanField(default=True)
     still_raising_fund = models.BooleanField(default=True)
+    will_show_front_page = models.BooleanField(default=False)
 
     def __str__(self):
         return self.name
+
+    @property
+    def get_donor_count(self):
+        return self.donation_project.distinct('donor').count()
+
+    @property
+    def get_raised_percentage(self):
+        return (self.collected_money * 100) / self.expected_budget if self.expected_budget else 0
 
 
 class ProjectsGallary(BaseModel):
@@ -43,4 +52,3 @@ class ProjectsGallary(BaseModel):
 
     def __str__(self):
         return self.project.name
-

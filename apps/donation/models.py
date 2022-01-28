@@ -76,7 +76,7 @@ class DonationRecord(BaseModel):
         (SUCCESS, 'Success'),
     )
     donor = models.ForeignKey(Donor, on_delete=models.CASCADE, db_index=True)
-    donated_in_project = models.ForeignKey(Projects, on_delete=models.CASCADE, blank=True, null=True)
+    donated_in_project = models.ForeignKey(Projects, on_delete=models.CASCADE, related_name='donation_project')
     amount = models.DecimalField(default=0, decimal_places=2, max_digits=15)
     fund_type = models.ForeignKey(FundType, on_delete=models.CASCADE)
     donation_details = models.CharField(max_length=249, blank=True, null=True)

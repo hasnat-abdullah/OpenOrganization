@@ -19,7 +19,8 @@
         </ol>
         <div class="carousel-inner">
             {% for c in cover %}
-                <div class="item {% if forloop.first %}active{% endif %}" style="background:url({{ c.cover_photo.url }}) no-repeat;background-size:cover;">
+                <div class="item {% if forloop.first %}active{% endif %}"
+                     style="background:url({{ c.cover_photo.url }}) no-repeat;background-size:cover;">
                     <div class="container">
                         <div class="carousel-caption">
                             {% if c.h2_text %}<h2>{{ c.h2_text }}</h2>{% endif %}
@@ -39,18 +40,21 @@
             class="glyphicon glyphicon-chevron-right"></span></a></div>
     <!-- // Banner Slider -->
 
-{#    <!--UPCOMING EVENT-->#}
-{#    <div class="highlight-bg has-margin-bottom">#}
-{#        <div class="container event-cta">#}
-{#            <div class="ec-txt"><span>UPCOMING EVENT</span>#}
-{#                <p>"The Law Demands, but Grace Supplies" - Paster J.P.</p>#}
-{#            </div>#}
-{#            <a class="btn btn-lg btn-primary" href="event-single.html" role="button">Program details →</a></div>#}
-{#    </div>#}
-{#    <!-- // UPCOMING EVENT -->#}
+    {#    <!--UPCOMING EVENT-->#}
+    {#    <div class="highlight-bg has-margin-bottom">#}
+    {#        <div class="container event-cta">#}
+    {#            <div class="ec-txt"><span>UPCOMING EVENT</span>#}
+    {#                <p>"The Law Demands, but Grace Supplies" - Paster J.P.</p>#}
+    {#            </div>#}
+    {#            <a class="btn btn-lg btn-primary" href="event-single.html" role="button">Program details →</a></div>#}
+    {#    </div>#}
+    {#    <!-- // UPCOMING EVENT -->#}
 
     <!--FEATURED BLOCK-->
     <div class="container">
+        <div class="section-title">
+            <h4>RECENT PROJECTS </h4>
+        </div>
         <div class="row feature-block">
             {% for p in projects %}
                 <div class="col-md-4 col-sm-6 has-margin-bottom"><img class="img-responsive" src="{{ p.logo.url }} "
@@ -72,28 +76,31 @@
             <h4>GRACE OUTREACH </h4>
         </div>
         <div class="charity-box">
-            <div class="charity-image"><img src="{% static 'images/charity-donation.jpg' %}" class="img-responsive"
+            <div class="charity-image"><img src="{{ raise_fund.logo.url }}" class="img-responsive"
                                             alt="charity donation fundraising"></div>
             <div class="charity-desc">
-                <h3>Help human trafficking survivors</h3>
-                <p> Posted by <a class="link-reverse" href="#">Steven</a> on Aug 11 2014</p>
-                <h2 class="pledged-amount">$6560.00</h2>
-                <p>Pledged of $15000 goal</p>
+                <h3>{{ raise_fund.name }}</h3>
+                <p> Posted on {{ raise_fund.created_at }}</p>
+                <h2 class="pledged-amount">৳ {{ raise_fund.collected_money|intcomma }}</h2>
+                <p>Pledged of ৳{{ raise_fund.expected_budget|intcomma }} goal</p>
                 <div class="progress">
-                    <div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="60"
-                         aria-valuemin="0" aria-valuemax="100" style="width: 60%"><span
-                            class="sr-only">60% Complete</span>60%
+                    <div class="progress-bar progress-bar-success" role="progressbar"
+                         aria-valuenow="{{ raise_fund.get_raised_percentage }}"
+                         aria-valuemin="0" aria-valuemax="100" style="width: {{ raise_fund.get_raised_percentage }}%"><span
+                            class="sr-only">{{ raise_fund.get_raised_percentage }}% Complete</span>{{ raise_fund.get_raised_percentage }}%
                     </div>
                 </div>
                 <div class="pull-left has-margin-xs-right">
-                    <h3>24</h3>
+                    <h3>{{ raise_fund.get_donor_count }}</h3>
                     <p>Backers</p>
                 </div>
                 <div class="pull-left">
-                    <h3 class="pledged-amount">17</h3>
+                    <h3 class="pledged-amount">{{ raise_fund.end_date|timeuntil }}</h3>
                     <p>Days left</p>
                 </div>
-                <div class="donate-now"><a href="charity-donation.html" class="btn btn-lg btn-primary">Donate Now →</a>
+
+                <div class="donate-now"><a href="{% url 'project_details' pk=raise_fund.id %}"><b><u>Details</u></b></a>&emsp;<a
+                        href="charity-donation.html" class="btn btn-lg btn-primary">Donate Now →</a>
                 </div>
             </div>
         </div>
@@ -109,21 +116,22 @@
                 </div>
 
                 <!--Blog list-->
-{% for article in articles %}
-                <div class="row {% if forloop.first %}has-margin-bottom{% endif %}">
-                    <div class="col-md-4 col-sm-4"><img class="img-responsive center-block"
+                {% for article in articles %}
+                    <div class="row {% if forloop.first %}has-margin-bottom{% endif %}">
+                        <div class="col-md-4 col-sm-4"><img class="img-responsive center-block"
                                                             src="{{ article.thumbnail.url }}"
                                                             style="width: 265px; height: 177px;"
                                                             alt="{{ article.title }}"></div>
-                    <div class="col-md-8 col-sm-8 bulletin">
-                        <h4 class="media-heading">{{ article.title }}</h4>
-                        <p>{{ article.created_at|naturaltime }} by <a
+                        <div class="col-md-8 col-sm-8 bulletin">
+                            <h4 class="media-heading">{{ article.title }}</h4>
+                            <p>{{ article.created_at|naturaltime }} by <a
                                     href="{% url 'author_articles' pk=article.author.id %}"
                                     class="link-reverse">{{ article.author.name }}</a></p>
-                        <p>{{ article.description|truncatechars:200 }}</p>
-                        <a class="btn btn-primary" href="{% url 'article_details' pk=article.id %}" role="button">Read Article →</a></div>
-                </div>
-{% endfor %}
+                            <p>{{ article.description|truncatechars:200 }}</p>
+                            <a class="btn btn-primary" href="{% url 'article_details' pk=article.id %}" role="button">Read
+                                Article →</a></div>
+                    </div>
+                {% endfor %}
                 <!--Blog list-->
 
             </div>
@@ -137,13 +145,13 @@
                     </div>
                     <div class="list-group">
                         {% for notice in notices %}
-                        <a href="{% url 'notice_details' pk=notice.id %}" class="list-group-item">
-                        <p class="list-group-item-heading">{{ notice.title | truncatechars:25 }}</p>
-                        <p class="text-muted list-group-item-text">{{ notice.published_date.date }}</p></a>
-{% endfor %}
-                    <a href="{% url 'notice_list' %}" class="text-center list-group-item active">
-                        <p class="btn btn-sm btn-primary ">View All</p></a>
-                        </div>
+                            <a href="{% url 'notice_details' pk=notice.id %}" class="list-group-item">
+                                <p class="list-group-item-heading">{{ notice.title | truncatechars:25 }}</p>
+                                <p class="text-muted list-group-item-text">{{ notice.published_date.date }}</p></a>
+                        {% endfor %}
+                        <a href="{% url 'notice_list' %}" class="text-center list-group-item active">
+                            <p class="btn btn-sm btn-primary ">View All</p></a>
+                    </div>
                 </div>
             </div>
         </div>
@@ -270,7 +278,8 @@
             <div class="col-sm-6">
                 <div class="panel panel-danger">
                     <div class="panel-heading">
-                        <h3 class="panel-title">Latest Expenses<span class="pull-right"><a href="#"><u>View All</u></a></span>
+                        <h3 class="panel-title">Latest Expenses<span class="pull-right"><a
+                                href="{% url 'expense_list' %}"><u>View All</u></a></span>
                         </h3>
                     </div>
                     <div class="panel-body">
@@ -302,7 +311,7 @@
                 <div class="panel panel-success">
                     <div class="panel-heading">
                         <h3 class="panel-title">Latest Donations <span class="pull-right"><a
-                                href="#"><u>View All</u></a></span></h3>
+                                href="{% url 'donation_list' %}"><u>View All</u></a></span></h3>
                     </div>
                     <div class="panel-body">
                         <table class="table table-striped">
