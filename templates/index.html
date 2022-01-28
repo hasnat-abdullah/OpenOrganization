@@ -3,7 +3,7 @@
 {% load static %}
 {% block seo_description %}{% endblock %}
 {% block seo_keyword %}{% endblock %}
-{% block title %}Index Page{% endblock %}
+{% block title %}Muslim Aid{% endblock %}
 {% block stylesheet %} {% endblock %}
 {% block body %}
 
@@ -19,7 +19,7 @@
         </ol>
         <div class="carousel-inner">
             {% for c in cover %}
-                <div class="item slide-one {% if forloop.first %}active{% endif %}">
+                <div class="item {% if forloop.first %}active{% endif %}" style="background:url({{ c.cover_photo.url }}) no-repeat;background-size:cover;">
                     <div class="container">
                         <div class="carousel-caption">
                             {% if c.h2_text %}<h2>{{ c.h2_text }}</h2>{% endif %}
@@ -39,17 +39,15 @@
             class="glyphicon glyphicon-chevron-right"></span></a></div>
     <!-- // Banner Slider -->
 
-    <!--UPCOMING EVENT-->
-
-    <div class="highlight-bg has-margin-bottom">
-        <div class="container event-cta">
-            <div class="ec-txt"><span>UPCOMING EVENT</span>
-                <p>"The Law Demands, but Grace Supplies" - Paster J.P.</p>
-            </div>
-            <a class="btn btn-lg btn-primary" href="event-single.html" role="button">Program details →</a></div>
-    </div>
-
-    <!-- // UPCOMING EVENT -->
+{#    <!--UPCOMING EVENT-->#}
+{#    <div class="highlight-bg has-margin-bottom">#}
+{#        <div class="container event-cta">#}
+{#            <div class="ec-txt"><span>UPCOMING EVENT</span>#}
+{#                <p>"The Law Demands, but Grace Supplies" - Paster J.P.</p>#}
+{#            </div>#}
+{#            <a class="btn btn-lg btn-primary" href="event-single.html" role="button">Program details →</a></div>#}
+{#    </div>#}
+{#    <!-- // UPCOMING EVENT -->#}
 
     <!--FEATURED BLOCK-->
     <div class="container">
@@ -67,6 +65,90 @@
         </div>
     </div>
     <!-- // END FEATURED BLOCK-->
+
+    <!--CHARITY DONATION-->
+    <div class="container has-margin-bottom">
+        <div class="section-title">
+            <h4>GRACE OUTREACH </h4>
+        </div>
+        <div class="charity-box">
+            <div class="charity-image"><img src="{% static 'images/charity-donation.jpg' %}" class="img-responsive"
+                                            alt="charity donation fundraising"></div>
+            <div class="charity-desc">
+                <h3>Help human trafficking survivors</h3>
+                <p> Posted by <a class="link-reverse" href="#">Steven</a> on Aug 11 2014</p>
+                <h2 class="pledged-amount">$6560.00</h2>
+                <p>Pledged of $15000 goal</p>
+                <div class="progress">
+                    <div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="60"
+                         aria-valuemin="0" aria-valuemax="100" style="width: 60%"><span
+                            class="sr-only">60% Complete</span>60%
+                    </div>
+                </div>
+                <div class="pull-left has-margin-xs-right">
+                    <h3>24</h3>
+                    <p>Backers</p>
+                </div>
+                <div class="pull-left">
+                    <h3 class="pledged-amount">17</h3>
+                    <p>Days left</p>
+                </div>
+                <div class="donate-now"><a href="charity-donation.html" class="btn btn-lg btn-primary">Donate Now →</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--// END CHARITY DONATION -->
+
+    <!-- BLOG LIST / LATEST SERMONS -->
+    <div class="container has-margin-bottom">
+        <div class="row">
+            <div class="col-md-9 has-margin-bottom">
+                <div class="section-title left-align-desktop">
+                    <h4> LATEST ARTICLES </h4>
+                </div>
+
+                <!--Blog list-->
+{% for article in articles %}
+                <div class="row {% if forloop.first %}has-margin-bottom{% endif %}">
+                    <div class="col-md-4 col-sm-4"><img class="img-responsive center-block"
+                                                            src="{{ article.thumbnail.url }}"
+                                                            style="width: 265px; height: 177px;"
+                                                            alt="{{ article.title }}"></div>
+                    <div class="col-md-8 col-sm-8 bulletin">
+                        <h4 class="media-heading">{{ article.title }}</h4>
+                        <p>{{ article.created_at|naturaltime }} by <a
+                                    href="{% url 'author_articles' pk=article.author.id %}"
+                                    class="link-reverse">{{ article.author.name }}</a></p>
+                        <p>{{ article.description|truncatechars:200 }}</p>
+                        <a class="btn btn-primary" href="{% url 'article_details' pk=article.id %}" role="button">Read Article →</a></div>
+                </div>
+{% endfor %}
+                <!--Blog list-->
+
+            </div>
+            <!--// col md 9-->
+
+            <!--Latest Notice-->
+            <div class="col-md-3">
+                <div class="well">
+                    <div class="section-title">
+                        <h4> RECENT NOTICE </h4>
+                    </div>
+                    <div class="list-group">
+                        {% for notice in notices %}
+                        <a href="{% url 'notice_details' pk=notice.id %}" class="list-group-item">
+                        <p class="list-group-item-heading">{{ notice.title | truncatechars:25 }}</p>
+                        <p class="text-muted list-group-item-text">{{ notice.published_date.date }}</p></a>
+{% endfor %}
+                    <a href="{% url 'notice_list' %}" class="text-center list-group-item active">
+                        <p class="btn btn-sm btn-primary ">View All</p></a>
+                        </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- END BLOG LIST / LATEST SERMONS -->
 
     <!--EVENT LISTS-->
     <div class="highlight-bg has-margin-bottom">
@@ -139,90 +221,6 @@
         </div>
     </div>
     <!-- // END EVENT LISTS -->
-
-    <!-- BLOG LIST / LATEST SERMONS -->
-    <div class="container has-margin-bottom">
-        <div class="row">
-            <div class="col-md-9 has-margin-bottom">
-                <div class="section-title left-align-desktop">
-                    <h4> LATEST ARTICLES </h4>
-                </div>
-
-                <!--Blog list-->
-{% for article in articles %}
-                <div class="row {% if forloop.first %}has-margin-bottom{% endif %}">
-                    <div class="col-md-4 col-sm-4"><img class="img-responsive center-block"
-                                                            src="{{ article.thumbnail.url }}"
-                                                            style="width: 265px; height: 177px;"
-                                                            alt="{{ article.title }}"></div>
-                    <div class="col-md-8 col-sm-8 bulletin">
-                        <h4 class="media-heading">{{ article.title }}</h4>
-                        <p>{{ article.created_at|naturaltime }} by <a
-                                    href="{% url 'author_articles' pk=article.author.id %}"
-                                    class="link-reverse">{{ article.author.name }}</a></p>
-                        <p>{{ article.description|truncatechars:200 }}</p>
-                        <a class="btn btn-primary" href="{% url 'article_details' pk=article.id %}" role="button">Read Article →</a></div>
-                </div>
-{% endfor %}
-                <!--Blog list-->
-
-            </div>
-            <!--// col md 9-->
-
-            <!--Latest Notice-->
-            <div class="col-md-3">
-                <div class="well">
-                    <div class="section-title">
-                        <h4> RECENT NOTICE </h4>
-                    </div>
-                    <div class="list-group">
-                        {% for notice in notices %}
-                        <a href="{% url 'notice_details' pk=notice.id %}" class="list-group-item">
-                        <p class="list-group-item-heading">{{ notice.title | truncatechars:25 }}</p>
-                        <p class="text-muted list-group-item-text">{{ notice.published_date.date }}</p></a>
-{% endfor %}
-                    <a href="{% url 'notice_list' %}" class="text-center list-group-item active">
-                        <p class="btn btn-sm btn-primary ">View All</p></a>
-                        </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <!-- END BLOG LIST / LATEST SERMONS -->
-
-    <!--CHARITY DONATION-->
-    <div class="container has-margin-bottom">
-        <div class="section-title">
-            <h4>GRACE OUTREACH </h4>
-        </div>
-        <div class="charity-box">
-            <div class="charity-image"><img src="{% static 'images/charity-donation.jpg' %}" class="img-responsive"
-                                            alt="charity donation fundraising"></div>
-            <div class="charity-desc">
-                <h3>Help human trafficking survivors</h3>
-                <p> Posted by <a class="link-reverse" href="#">Steven</a> on Aug 11 2014</p>
-                <h2 class="pledged-amount">$6560.00</h2>
-                <p>Pledged of $15000 goal</p>
-                <div class="progress">
-                    <div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="60"
-                         aria-valuemin="0" aria-valuemax="100" style="width: 60%"><span
-                            class="sr-only">60% Complete</span>60%
-                    </div>
-                </div>
-                <div class="pull-left has-margin-xs-right">
-                    <h3>24</h3>
-                    <p>Backers</p>
-                </div>
-                <div class="pull-left">
-                    <h3 class="pledged-amount">17</h3>
-                    <p>Days left</p>
-                </div>
-                <div class="donate-now"><a href="charity-donation.html" class="btn btn-lg btn-primary">Donate Now →</a>
-                </div>
-            </div>
-        </div>
-    </div>
-    <!--// END CHARITY DONATION -->
 
     <!--OUR GALLERY-->
     <div class="container has-margin-bottom">

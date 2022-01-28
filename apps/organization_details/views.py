@@ -24,7 +24,7 @@ class IndexView(View):
         # Cover photo
         cover = CoverPhoto.objects.filter(is_active=True).order_by('position')
         # Quote
-        quote = Quote.objects.filter(will_show_in_homepage=True).order_by('position')
+        quote = Quote.objects.filter(will_show_in_homepage=True).order_by('position')[:3]
         # Gallery image
         gallery = ProjectsGallary.objects.filter(is_active=True).only('image','short_description')[:8]
         # Projects

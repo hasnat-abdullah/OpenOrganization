@@ -47,7 +47,8 @@
             {% with request.resolver_match.url_name as url_name %}
                 <ul class="nav navbar-nav navbar-right">
                     <li class="{% if url_name == 'index' %}active{% endif %}"><a href="{% url 'index' %}">HOME</a></li>
-                    <li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown">Account<span
+                    <li class="{% if url_name == 'project_list' %}active{% endif %}"><a href="{% url 'index' %}">Project</a></li>
+                    <li class="dropdown {% if url_name == 'expense_list' or url_name == 'donation_list' %}active{% endif %} "><a href="#" class="dropdown-toggle" data-toggle="dropdown">Account<span
                             class="caret"></span></a>
                         <ul class="dropdown-menu dropdown-menu-left" role="menu">
                             <li><a href="{% url 'expense_list' %}">Expenses</a></li>
@@ -101,22 +102,22 @@
     <div class="container">
         <div class="row">
             <div class="col-sm-6 col-md-3">
-                <h5>ABOUT THE CHURCH</h5>
-                <p>For the word of God is living and active. Sharper than any double-edged sword, it penetrates even to
+                <h5>ABOUT USß</h5>
+                <p>For the word of Allah is living and active. Sharper than any double-edged sword, it penetrates even to
                     dividing soul and spirit, joints and marrow; it judges the thoughts and attitudes.</p>
             </div>
             <div class="col-sm-6 col-md-3">
                 <h5>QUICK LINKS</h5>
                 <ul class="footer-links">
                     <li><a href="#">Upcoming events</a></li>
-                    <li><a href="#">Ministries</a></li>
-                    <li><a href="#">Recent Sermons</a></li>
+                    <li><a href="#">FAQ</a></li>
+                    <li><a href="#">How to Donate</a></li>
                     <li><a href="#">Contact us</a></li>
                 </ul>
             </div>
             <div class="col-sm-6 col-md-3">
                 <h5>OUR ADDRESS</h5>
-                <p> Catholic Church<br>
+                <p> Muslim Aid<br>
                     121 King Street, Melbourne <br>
                     Victoria 3000 Australia<br>
                     <br>
